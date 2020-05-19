@@ -19,6 +19,7 @@ coverage.*
 
 # Ignore virtualenvs
 /dev
+venv
 pip-selfcheck.json
 
 socialapp/local_settings.py
