@@ -1,0 +1,5 @@
+FROM nginx
+
+COPY socialapp-nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /home/www-data/mysite/public
+COPY ./privacy/ /home/www-data/mysite/public
