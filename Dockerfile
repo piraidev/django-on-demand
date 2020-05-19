@@ -7,7 +7,6 @@ RUN apt-get update \
 
 WORKDIR /usr/src/app
 #COPY ./api /usr/src/app
-#COPY ./socialapp /usr/src/app
 #COPY ./manage.py /usr/src/app
 #COPY ./requirements.txt /usr/src/app
 COPY ./ /usr/src/app/

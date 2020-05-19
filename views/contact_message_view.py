@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from api.models import ContactMessage, User
+from models.models import ContactMessage, User
 
 @api_view(['POST'])
 def register_contact_message(request):

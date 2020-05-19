@@ -3,8 +3,8 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from api.models import MentorProfile, User
-from api.serializers import MentorProfileSerializer, UserSerializer
+from models.models import MentorProfile, User
+from serializers.serializers import MentorProfileSerializer, UserSerializer
 import urllib.parse
 
 @api_view(['GET'])

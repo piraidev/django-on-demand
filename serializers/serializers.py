@@ -1,4 +1,4 @@
-from api.models import User, MentorProfile, MenteeProfile, Message, Mentorship, Notification
+from models.models import User, MentorProfile, MenteeProfile, Message, Mentorship, Notification
 from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 

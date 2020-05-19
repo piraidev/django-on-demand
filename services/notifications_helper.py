@@ -1,5 +1,5 @@
-from api.models import Notification, User
-import api.services.email_service as email_service
+from models.models import Notification, User
+import services.email_service as email_service
 from django.conf import settings
 
 def create_notification(user_id, from_id, role, notification_type, mentorship):

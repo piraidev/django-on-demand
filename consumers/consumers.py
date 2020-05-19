@@ -1,9 +1,9 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 import json
-import api.services.chat_service as chat_service
-from api.serializers import MessageSerializer
-from api.services import notifications_helper
+import services.chat_service as chat_service
+from serializers.serializers import MessageSerializer
+from services import notifications_helper
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):

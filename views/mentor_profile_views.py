@@ -1,8 +1,8 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from api.models import MentorProfile
-from api.serializers import MentorProfileSerializer
+from models.models import MentorProfile
+from serializers.serializers import MentorProfileSerializer
 
 @api_view(['GET', 'PUT'])
 def mentor_profile(request, user_id):

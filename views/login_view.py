@@ -1,15 +1,15 @@
 from rest_framework.decorators import api_view, permission_classes
 from django.db import transaction
-from api.models import User
+from models.models import User
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-import api.services.login_service as login_service
-from api.serializers import UserSerializer, MentorProfileSerializer, MenteeProfileSerializer
-import api.services.linkedin_helper as lh
-import api.services.facebook_helper as fh
-import api.services.google_helper as gh
+import services.login_service as login_service
+from serializers.serializers import UserSerializer, MentorProfileSerializer, MenteeProfileSerializer
+import services.linkedin_helper as lh
+import services.facebook_helper as fh
+import services.google_helper as gh
 
 @api_view(['POST'])
 @transaction.atomic

@@ -22,7 +22,7 @@ coverage.*
 venv
 pip-selfcheck.json
 
-socialapp/local_settings.py
+local_settings.py
 
 # Ignore virtual studio (IDE) files
 .vscode

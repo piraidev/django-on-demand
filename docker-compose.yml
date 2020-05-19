@@ -15,7 +15,7 @@ services:
     build: .
     command: /usr/src/app/migrate_run.sh db
     environment:
-      - DJANGO_SETTINGS_MODULE=socialapp.docker_settings
+      - DJANGO_SETTINGS_MODULE=docker_settings
       - DB_HOST=db
     ports:
       - "8000:8000"

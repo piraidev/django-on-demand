@@ -25,7 +25,7 @@ SECRET_KEY = 'f3#@hzl^b7f-@r7p7xocth(!+$b-8(^3dqp6*&4*7@bq2-69u-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 # Adding this silenced system check in order to let django add a varchar field greater than 255 bytes
 # This is to allow long tokens (like the linkedin one) to be stored in the Token model/table
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'api'
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -52,11 +52,10 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'request_logging.middleware.LoggingMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
-ROOT_URLCONF = 'socialapp.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -74,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'socialapp.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
@@ -86,17 +85,18 @@ DATABASES = {
         'NAME': 'socialapp',
         'USER': 'admin',
         'PASSWORD': 'secret',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': '3306'
     }
 }
 
-ASGI_APPLICATION = 'socialapp.routing.application'
+# Channels
+ASGI_APPLICATION = 'routing.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('redis', 6379)],
+            "hosts": [('127.0.0.1', 6379)],
         },
     },
 }
@@ -151,33 +151,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-AUTH_USER_MODEL = 'api.User'
-
-# Settings that should be settled locally depending on environment (using local_settings file)
-FACEBOOK_ACCESS_TOKEN = '214076775977570|a2b4144e6811caf605a0c2eecde26e20'
-LINKEDIN_CLIENT_ID = ''
-LINKEDIN_CLIENT_SECRET = ''
-LINKEDIN_REDIRECT_URI = ''
-
-# Including all environment (local) settings.
-# This import should be kept at the end of this file, to ensure local settings will
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'DEBUG',  # change debug level as appropiate
-            'propagate': False,
-        },
-    },
-}
-SENDGRID_API_CLIENT_KEY = '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'
+AUTH_USER_MODEL = '.User'
 
 #SENDGRID SETTINGS
 FROM_EMAIL_ADDRESS = 'no-reply@socialapp.domain'
@@ -191,3 +165,19 @@ SENGRID_REQUEST_REJECTED_TEMPLATE_ID = 'd-c59ac642e529479892eb2eb3f9e55d75'
 SENGRID_REQUEST_CANCELLED_TEMPLATE_ID = 'd-2900fe7cb1964fb5a6e54f11215dc844'
 SENGRID_REQUEST_FINISHED_MENTOR_TEMPLATE_ID = 'd-27c97dafdde8447dbf6684b4ac655128'
 SENGRID_REQUEST_FINISHED_MENTEE_TEMPLATE_ID = 'd-81ea668f0262488ca6d3d0e678ce719d'
+
+
+# Settings that should be settled locally depending on environment (using local_settings file)
+FACEBOOK_ACCESS_TOKEN = ''
+LINKEDIN_CLIENT_ID = ''
+LINKEDIN_CLIENT_SECRET = ''
+LINKEDIN_REDIRECT_URI = ''
+SENDGRID_API_CLIENT_KEY = ''
+
+# Including all environment (local) settings.
+# This import should be kept at the end of this file, to ensure local settings will
+# always override the default ones from here.
+try:
+   from local_settings import *
+except ImportError:
+    raise Exception("A local_settings.py file is required to run this project")

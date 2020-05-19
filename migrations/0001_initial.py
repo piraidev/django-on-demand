@@ -96,7 +96,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.TextField()),
                 ('date_sent', models.DateTimeField(default=django.utils.timezone.now)),
-                ('mentorship', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='api.Mentorship')),
+                ('mentorship', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='Mentorship')),
                 ('sender', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

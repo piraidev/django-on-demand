@@ -1,8 +1,8 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from api.models import MenteeProfile
-from api.serializers import MenteeProfileSerializer
+from models.models import MenteeProfile
+from serializers.serializers import MenteeProfileSerializer
 
 @api_view(['GET', 'PUT'])
 def mentee_profile(request, user_id):

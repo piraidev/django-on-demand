@@ -1,10 +1,10 @@
-from api.models import User
+from models.models import User
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from api.serializers import UserSerializerWithoutAuthData
+from serializers.serializers import UserSerializerWithoutAuthData
 from django_filters.rest_framework import DjangoFilterBackend
-import api.services.email_service as email_service
+import services.email_service as email_service
 
 class UserViewSet(viewsets.ModelViewSet):
 

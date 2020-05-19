@@ -3,10 +3,10 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from api.models import Mentorship, MenteeProfile, MentorProfile, User, Notification
-from api.services import notifications_helper
-from api.serializers import MentorshipSerializer, MenteeProfileSerializer, MentorProfileSerializer
-import api.services.email_service as email_service
+from models.models import Mentorship, MenteeProfile, MentorProfile, User, Notification
+from services import notifications_helper
+from serializers.serializers import MentorshipSerializer, MenteeProfileSerializer, MentorProfileSerializer
+import services.email_service as email_service
 from django.conf import settings
 
 class MentorshipViewSet(viewsets.ModelViewSet):
