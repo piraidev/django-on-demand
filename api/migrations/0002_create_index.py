@@ -8,6 +8,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunSQL(
-            ('ALTER TABLE api_mentor_profile ADD FULLTEXT (description, education, skills)',)
-    )
+            ('ALTER TABLE api_mentor_profile ADD FULLTEXT (skills)',)
+        ),
+        migrations.RunSQL(
+            ('ALTER TABLE api_profile ADD FULLTEXT (description, education)',)
+        )
 ]

@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view, permission_classes
 from django.db import transaction
-from api.models import User
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -41,7 +41,7 @@ def linkedin_login(request):
     access_token, detail = lh.get_access_token(authorization_code)
 
     if(access_token):
-        user = login_service.login_user(username, )
+        user = login_service.login_user(username, user_type, body)
         user_serializer = UserSerializer(user)
         return Response({'authenticated': True, 'user': user_serializer.data, 'expires_in': detail})
     
