@@ -11,7 +11,7 @@ class TokenSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ('email', 'picture', 'linkedin', 'behance', 'twitter', 'instagram', 'facebook', 'youtube')
+        fields = ('email', 'picture', 'linkedin', 'behance', 'twitter', 'instagram', 'facebook', 'youtube', 'description', 'education')
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(read_only=True)
