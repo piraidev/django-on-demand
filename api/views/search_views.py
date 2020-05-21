@@ -3,7 +3,8 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from api.models import MentorProfile, User
+from django.contrib.auth.models import User
+from api.models import MentorProfile
 from api.serializers import MentorProfileSerializer, UserSerializer
 import urllib.parse
 
@@ -20,10 +21,11 @@ def newest_mentors(request):
 def find_mentors(request):
     search_term = request.GET.get('search_term')
     decoded_search_term = urllib.parse.unquote(search_term)
-    search_query_tables = "SELECT * FROM api_mentor_profile M LEFT JOIN api_user U ON M.user_id = U.id WHERE "
+    search_query_tables = "SELECT * FROM api_mentor_profile M LEFT JOIN auth_user U ON M.user_id = U.id LEFT JOIN api_profile P ON P.user_id = U.id WHERE "
     search_query_names_like = "U.first_name LIKE %s OR U.last_name LIKE %s OR "
-    search_query_full_text = "MATCH (description,education,skills) AGAINST (%s IN NATURAL LANGUAGE MODE)"
-    complete_search_query = search_query_tables + search_query_names_like + search_query_full_text
-    results = MentorProfile.objects.raw(complete_search_query, [f'%{decoded_search_term}%', f'%{decoded_search_term}%', decoded_search_term])
+    search_query_full_text_profile = "MATCH (P.description,P.education) AGAINST (%s IN NATURAL LANGUAGE MODE)"
+    search_query_full_text_mentor_profile = " OR MATCH (M.skills) AGAINST (%s IN NATURAL LANGUAGE MODE)"
+    complete_search_query = search_query_tables + search_query_names_like + search_query_full_text_profile + search_query_full_text_mentor_profile
+    results = MentorProfile.objects.raw(complete_search_query, [f'%{decoded_search_term}%', f'%{decoded_search_term}%', f'%{decoded_search_term}%', f'%{decoded_search_term}%', decoded_search_term])
     profile_serializer = MentorProfileSerializer(results, many=True)
     return Response(profile_serializer.data)

@@ -1,8 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 from django.utils import timezone
+from django.contrib.auth.models import User
 
-class User(AbstractUser):
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True
+    )
     email = models.EmailField(unique=True)
     picture = models.TextField(blank=True, null=True)
     linkedin = models.TextField(blank=True, null=True)
@@ -11,18 +21,13 @@ class User(AbstractUser):
     instagram = models.TextField(blank=True, null=True)
     facebook = models.TextField(blank=True, null=True)
     youtube = models.TextField(blank=True, null=True)
-
-class BaseProfile(models.Model):
     description = models.TextField(blank=True, null=True)
     education = models.TextField(blank=True, null=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
-    class Meta:
-        abstract = True
-
-class MentorProfile(BaseProfile):
+class MentorProfile(models.Model):
     user = models.OneToOneField(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         related_name='mentor_profile',
         null=True
@@ -34,9 +39,9 @@ class MentorProfile(BaseProfile):
     class Meta:
         db_table = 'api_mentor_profile'
 
-class MenteeProfile(BaseProfile):
+class MenteeProfile(models.Model):
     user = models.OneToOneField(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         related_name='mentee_profile',
         null=True
@@ -48,11 +53,11 @@ class MenteeProfile(BaseProfile):
 class Mentorship(models.Model):
     status = models.TextField()
     mentor = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='mentorship_mentor')
     mentee = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='mentorship_mentee')
     date_created = models.DateTimeField(default=timezone.now)
@@ -68,14 +73,14 @@ class Message(models.Model):
         Mentorship,
         on_delete=models.DO_NOTHING)
     sender = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE)
     text = models.TextField()
     date_sent = models.DateTimeField(default=timezone.now) 
 
 class Notification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='notifications')
-    from_user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='from_user', null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='notifications')
+    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='from_user', null=True)
     mentorship = models.ForeignKey(Mentorship, on_delete=models.DO_NOTHING, related_name='mentorship', null=True)
     role = models.TextField()
     notification_type = models.TextField()
@@ -83,7 +88,7 @@ class Notification(models.Model):
     viewed = models.BooleanField(default=False)
 
 class ContactMessage(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='contact_message')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='contact_message')
     message = models.TextField()
     date_created = models.DateTimeField(default=timezone.now)
 

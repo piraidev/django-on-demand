@@ -151,8 +151,6 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-AUTH_USER_MODEL = 'api.User'
-
 # Settings that should be settled locally depending on environment (using local_settings file)
 FACEBOOK_ACCESS_TOKEN = '214076775977570|a2b4144e6811caf605a0c2eecde26e20'
 LINKEDIN_CLIENT_ID = ''

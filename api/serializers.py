@@ -1,4 +1,5 @@
-from api.models import User, MentorProfile, MenteeProfile, Message, Mentorship, Notification
+from django.contrib.auth.models import User
+from api.models import Profile, MentorProfile, MenteeProfile, Message, Mentorship, Notification
 from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 
@@ -7,30 +8,37 @@ class TokenSerializer(serializers.ModelSerializer):
         model = Token
         fields = ('key', 'created')
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('email', 'picture', 'linkedin', 'behance', 'twitter', 'instagram', 'facebook', 'youtube', 'description', 'education')
+
 class UserSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(read_only=True)
     auth_token = TokenSerializer(read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'auth_token', 'first_name', 'last_name', 'picture', 'linkedin', 'behance', 'twitter', 'instagram', 'facebook', 'youtube')
+        fields = ('id', 'username', 'auth_token', 'profile')
 
 class UserSerializerWithoutAuthData(serializers.ModelSerializer):
+    profile = ProfileSerializer(read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'picture', 'linkedin', 'behance', 'twitter', 'instagram', 'facebook', 'youtube')
+        fields = ('id', 'username', 'profile')
 
 class MentorProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only = True)
 
     class Meta:
         model = MentorProfile
-        fields = ('description', 'education', 'skills', 'user_id', 'user', 'finished_mentorships_count', 'mentorships_ranking_accumulator')
+        fields = ('skills', 'user_id', 'user', 'finished_mentorships_count', 'mentorships_ranking_accumulator')
 
 class MenteeProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only = True)
 
     class Meta:
         model = MenteeProfile
-        fields = ('description', 'education', 'user_id', 'user')
+        fields = ('user_id', 'user')
 
 class MessageSerializer(serializers.ModelSerializer):
     sender = UserSerializerWithoutAuthData(read_only = True)

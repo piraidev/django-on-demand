@@ -1,4 +1,5 @@
-from api.models import User, MenteeProfile, MentorProfile
+from django.contrib.auth.models import User
+from api.models import MenteeProfile, MentorProfile
 from rest_framework.authtoken.models import Token
 from api.serializers import UserSerializer, MentorProfileSerializer, MenteeProfileSerializer
 import api.services.email_service as email_service
@@ -12,7 +13,7 @@ def create_profile(user, user_type):
     return profile
 
 def login_user(email, user_type, request_data):
-    user, created = User.objects.get_or_create(username=email, email=email)
+    user, created = User.objects.get_or_create(username=email)
     if(not user.picture):
         if('picture' in request_data):
             user.picture = request_data['picture']
@@ -23,7 +24,7 @@ def login_user(email, user_type, request_data):
         user.save()
     Token.objects.get_or_create(user=user)
     if(created):
-        email_service.send_email(user.email, settings.SENGRID_WELCOME_TEMPLATE_ID, {'name': user.first_name})
+        email_service.send_email(user.profile.email, settings.SENGRID_WELCOME_TEMPLATE_ID, {'name': user.first_name})
     return user
 
 def login_with_validated_token(request_data, is_valid_token):
