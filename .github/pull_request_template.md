@@ -1,7 +1,7 @@
 ## Purpose :muscle:
 
-## Links :link:
+## Require changes (Database, config, etc)
 
-## Migrations :file_cabinet:
+## Links :link:
 
 ## Additional Info :book:
