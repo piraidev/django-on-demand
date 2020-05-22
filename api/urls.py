@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from rest_framework import routers
 from api.views import (views,
                        user_viewset,
-                       login_view,
+                       role_view,
                        mentor_profile_views,
                        mentee_profile_views,
                        search_views,
@@ -17,10 +17,7 @@ router.register('mentorship', mentorship_views.MentorshipViewSet)
 
 urlpatterns = [
     url('status/', views.status),
-    url('facebook_login/', login_view.fb_login),
-    url('linkedin_login/', login_view.linkedin_login),
-    url('google_login/', login_view.google_login),
-    url('users/change_role/', login_view.change_role),
+    url('users/change_role/', role_view.change_role),
     url(r'^users/(?P<user_id>[0-9]+)/mentor_profile', mentor_profile_views.mentor_profile),
     url(r'^users/(?P<user_id>[0-9]+)/mentee_profile', mentee_profile_views.mentee_profile),
     url('newest_mentors', search_views.newest_mentors),

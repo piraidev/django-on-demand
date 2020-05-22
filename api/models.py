@@ -35,7 +35,8 @@ class MentorProfile(models.Model):
     skills = models.TextField(blank=True, null=True)
     finished_mentorships_count = models.IntegerField(default=0)
     mentorships_ranking_accumulator = models.IntegerField(default=0)
-
+    date_joined = models.DateTimeField(default=timezone.now)
+    
     class Meta:
         db_table = 'api_mentor_profile'
 
@@ -46,7 +47,8 @@ class MenteeProfile(models.Model):
         related_name='mentee_profile',
         null=True
     )
-
+    date_joined = models.DateTimeField(default=timezone.now)
+    
     class Meta:
         db_table = 'api_mentee_profile'
 
