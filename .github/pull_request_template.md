@@ -1,6 +1,6 @@
 ## Purpose :muscle:
 
-## Require changes (Database, config, etc)
+## Changes required (Database, config, etc)
 
 ## Links :link:
 
