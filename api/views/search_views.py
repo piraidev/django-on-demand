@@ -13,7 +13,6 @@ def newest_mentors(request):
     """
     Retrieve the five newest mentors that joined, nesting user data
     """
-    
     mentor_profiles = MentorProfile.objects.select_related('user').filter(user__first_name__isnull=False, user__last_name__isnull=False, user__profile__education__isnull=False, user__profile__description__isnull=False, skills__isnull=False).order_by('-date_joined')[:30]
     mentor_serializer = MentorProfileSerializer(mentor_profiles, many=True)
     return Response(mentor_serializer.data)
