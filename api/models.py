@@ -7,10 +7,11 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-class Profile(models.Model):
+class UserDetails(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
+        related_name='details',
         null=True
     )
     email = models.EmailField(unique=True)
