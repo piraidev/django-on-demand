@@ -1,12 +1,6 @@
 from django.contrib.auth.models import User
 from api.models import Profile, MentorProfile, MenteeProfile, Message, Mentorship, Notification
-from rest_framework.authtoken.models import Token
 from rest_framework import serializers
-
-class TokenSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Token
-        fields = ('key', 'created')
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,10 +9,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(read_only=True)
-    auth_token = TokenSerializer(read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'username', 'auth_token', 'profile')
+        fields = ('id', 'username', 'profile')
 
 class UserSerializerWithoutAuthData(serializers.ModelSerializer):
     profile = ProfileSerializer(read_only=True)

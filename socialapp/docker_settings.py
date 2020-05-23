@@ -142,20 +142,17 @@ STATIC_URL = '/static/'
 # API Settings
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    # TEMPORARILY COMMENTING AUTHENTICATION OUT
+    # IN FUTURE CHANGES, AUTHENTICATION WILL BE REMOVED FOR THIS REUSABLE APP
+    
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.TokenAuthentication',
+    # ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
-
-# Settings that should be settled locally depending on environment (using local_settings file)
-FACEBOOK_ACCESS_TOKEN = '214076775977570|a2b4144e6811caf605a0c2eecde26e20'
-LINKEDIN_CLIENT_ID = ''
-LINKEDIN_CLIENT_SECRET = ''
-LINKEDIN_REDIRECT_URI = ''
 
 # Including all environment (local) settings.
 # This import should be kept at the end of this file, to ensure local settings will
