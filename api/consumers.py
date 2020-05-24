@@ -3,7 +3,7 @@ from channels.generic.websocket import WebsocketConsumer
 import json
 import api.services.chat_service as chat_service
 from api.serializers import MessageSerializer
-from api.services import notifications_helper
+from api.signals import new_message
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -35,7 +35,7 @@ class ChatConsumer(WebsocketConsumer):
         to_role = text_data_json['to_role']
 
         message = chat_service.save_message(mentorship_id, from_id, to_id, message_text)
-        notifications_helper.create_message_notification(to_id, to_role, from_id, mentorship_id)
+        new_message.send(sender=self.__class__, from_user_id=from_id, to_user_id=to_id, to_role=to_role, mentorship_id=mentorship_id)
         serialized_message = MessageSerializer(message)
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
