@@ -1,7 +1,6 @@
 from django.conf.urls import url, include
 from rest_framework import routers
 from api.views import (views,
-                       user_viewset,
                        role_view,
                        mentor_profile_views,
                        mentee_profile_views,
@@ -12,7 +11,6 @@ from api.views import (views,
                        contact_message_view)
 
 router = routers.DefaultRouter(trailing_slash=False)
-router.register('users', user_viewset.UserViewSet)
 router.register('mentorship', mentorship_views.MentorshipViewSet)
 
 urlpatterns = [

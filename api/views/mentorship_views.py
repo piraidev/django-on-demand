@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from api.models import Mentorship, MenteeProfile, MentorProfile, Notification
 from api.services import notifications_helper
 from api.serializers import MentorshipSerializer, MenteeProfileSerializer, MentorProfileSerializer
-import api.services.email_service as email_service
 from django.conf import settings
+from api.signals import mentorship_requested, mentorship_finished, mentorship_cancelled, mentorship_accepted, mentorship_rejected
 
 class MentorshipViewSet(viewsets.ModelViewSet):
     queryset = Mentorship.objects.all()
@@ -36,8 +36,8 @@ class MentorshipViewSet(viewsets.ModelViewSet):
             'mentee_request_comments': mentee_request_comments})
         serializer.is_valid()
         mentorship_created = serializer.save()
-        notifications_helper.create_notification(mentor_id, mentee_id, 'mentor', 'mentorship_requested', mentorship_created)
-        email_service.send_email(mentor.email, settings.SENGRID_REQUEST_TEMPLATE_ID, {'to_name': mentor.first_name, 'from_name': mentee.first_name})
+        if(mentorship_created is True):
+            mentorship_requested.send(sender=self.__class__, from_user=mentee.profile.email, to_user=mentor.profile.email)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
@@ -49,22 +49,17 @@ class MentorshipViewSet(viewsets.ModelViewSet):
         role_to_notify, user = ('mentor', mentorship.mentor) if role == 'mentee' else ('mentee', mentorship.mentee)
         from_user = mentorship.mentee if role == 'mentee' else mentorship.mentor
         if(mentorship_status == 'cancelled'):
-            notifications_helper.create_notification(user.id, from_user.id, role_to_notify, 'mentorship_cancelled', mentorship)
-            email_service.send_email(user.profile.email, settings.SENGRID_REQUEST_CANCELLED_TEMPLATE_ID, {'to_name': user.first_name, 'from_name': from_user.first_name})
+            mentorship_cancelled.send(sender=self.__class__, from_user=from_user.profile.email, to_user=user.profile.email, role_to_notify=role_to_notify, mentorship_cancelled=mentorship)
         elif(mentorship_status == 'finished'):
             ranking = request.data['ranking']
             mentorship.ranking = ranking
-            notifications_helper.create_notification(user.id, from_user.id, role_to_notify, 'mentorship_finished', mentorship)
-            email_service.send_email(user.profile.email, settings.SENGRID_REQUEST_FINISHED_MENTOR_TEMPLATE_ID, {'to_name': user.first_name, 'from_name': from_user.first_name, 'mentor_ranking': ranking})
-            email_service.send_email(from_user.profile.email, settings.SENGRID_REQUEST_FINISHED_MENTEE_TEMPLATE_ID, {'to_name': from_user.first_name, 'from_name': user.first_name})
+            mentorship_finished.send(sender=self.__class__, from_user=from_user.profile.email, to_user=user.profile.email, mentorship=mentorship, mentor_ranking=ranking)
         elif(mentorship_status == 'ongoing'):
-            notifications_helper.create_notification(mentorship.mentee.id, mentorship.mentor.id, 'mentee', 'mentorship_accepted', mentorship)
-            email_service.send_email(user.profile.email, settings.SENGRID_REQUEST_ACCEPTED_TEMPLATE_ID, {'to_name': user.first_name, 'from_name': from_user.first_name})
+            mentorship_accepted.send(sender=self.__class__, from_user=from_user.profile.email, to_user=user.profile.email, mentorship=mentorship)
         elif(mentorship_status == 'rejected'):
             rejection_reason = request.data['rejection_reason']
             mentorship.rejection_reason = rejection_reason
-            notifications_helper.create_notification(user.id, from_user.id, role_to_notify, 'mentorship_rejected', mentorship)
-            email_service.send_email(user.profile.email, settings.SENGRID_REQUEST_REJECTED_TEMPLATE_ID, {'to_name': user.first_name, 'from_name': from_user.first_name, 'rejection_reason': rejection_reason})
+            mentorship_rejected.send(sender=self.__class__, from_user=from_user.profile.email, to_user=user.profile.email, mentorship=mentorship, rejection_reason=rejection_reason)
         
         mentorship.save()
         return Response(status=status.HTTP_200_OK)
