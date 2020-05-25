@@ -81,15 +81,6 @@ class Message(models.Model):
     text = models.TextField()
     date_sent = models.DateTimeField(default=timezone.now) 
 
-class Notification(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='notifications')
-    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='from_user', null=True)
-    mentorship = models.ForeignKey(Mentorship, on_delete=models.DO_NOTHING, related_name='mentorship', null=True)
-    role = models.TextField()
-    notification_type = models.TextField()
-    date_created = models.DateTimeField(default=timezone.now)
-    viewed = models.BooleanField(default=False)
-
 class ContactMessage(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='contact_message')
     message = models.TextField()

@@ -1,13 +1,13 @@
-from api.models import UserDetails
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+import django.dispatch
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserDetails.objects.create(user=instance, email=instance.username)
+new_message = django.dispatch.Signal(providing_args=["from_user_id", "to_user_id", "to_role", "mentorship_id"])
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.details.save()
+mentorship_requested = django.dispatch.Signal(providing_args=["from_user", "to_user"])
+
+mentorship_cancelled = django.dispatch.Signal(providing_args=["from_user", "to_user", "role_to_notify", "mentorship_cancelled"])
+
+mentorship_finished = django.dispatch.Signal(providing_args=["from_user", "to_user", "mentorship", "mentor_ranking"])
+
+mentorship_accepted = django.dispatch.Signal(providing_args=["from_user", "to_user", "mentorship"])
+
+mentorship_rejected = django.dispatch.Signal(providing_args=["from_user", "to_user", "mentorship", "rejection_reason"])

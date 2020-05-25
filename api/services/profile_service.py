@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from api.models import MenteeProfile, MentorProfile
 from api.serializers import UserSerializer, MentorProfileSerializer, MenteeProfileSerializer
-import api.services.email_service as email_service
 from django.conf import settings
 
 def create_profile(user, user_type):

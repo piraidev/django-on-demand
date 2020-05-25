@@ -155,23 +155,6 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-#SENDGRID SETTINGS
-FROM_EMAIL_ADDRESS = 'no-reply@socialapp.domain'
-FROM_NAME = 'Social app dev team'
-##SENDGRID TEMPLATES IDS
-SENGRID_WELCOME_TEMPLATE_ID = 'd-69e79d9666b64e48964419fc325e616a'
-SENGRID_REQUEST_TEMPLATE_ID = 'd-4ed768feac3e46a18efd2afaf1102f29'
-SENGRID_NEW_MESSAGE_TEMPLATE_ID = 'd-979aef115e9e49af99461182ef0d6a76'
-SENGRID_REQUEST_ACCEPTED_TEMPLATE_ID = 'd-304f035567a64061961d3f820df051a8'
-SENGRID_REQUEST_REJECTED_TEMPLATE_ID = 'd-c59ac642e529479892eb2eb3f9e55d75'
-SENGRID_REQUEST_CANCELLED_TEMPLATE_ID = 'd-2900fe7cb1964fb5a6e54f11215dc844'
-SENGRID_REQUEST_FINISHED_MENTOR_TEMPLATE_ID = 'd-27c97dafdde8447dbf6684b4ac655128'
-SENGRID_REQUEST_FINISHED_MENTEE_TEMPLATE_ID = 'd-81ea668f0262488ca6d3d0e678ce719d'
-
-
-# Settings that should be settled locally depending on environment (using local_settings file)
-SENDGRID_API_CLIENT_KEY = ''
-
 # Including all environment (local) settings.
 # This import should be kept at the end of this file, to ensure local settings will
 # always override the default ones from here.
