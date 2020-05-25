@@ -96,4 +96,10 @@ class Migration(migrations.Migration):
                 ('user', models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='details', to=settings.AUTH_USER_MODEL)),
             ],
         ),
+        migrations.RunSQL(
+            ('ALTER TABLE api_mentor_profile ADD FULLTEXT (skills)',)
+        ),
+        migrations.RunSQL(
+            ('ALTER TABLE api_userdetails ADD FULLTEXT (description, education)',)
+        )
     ]
