@@ -70,21 +70,3 @@ class Mentorship(models.Model):
     finish_reason = models.TextField(blank=True, null=True)
     mentee_request_comments = models.TextField(blank=True, null=True)
     ranking = models.IntegerField(blank=True, null=True)
-
-class Message(models.Model):
-    mentorship = models.ForeignKey(
-        Mentorship,
-        on_delete=models.DO_NOTHING)
-    sender = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE)
-    text = models.TextField()
-    date_sent = models.DateTimeField(default=timezone.now) 
-
-class ContactMessage(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='contact_message')
-    message = models.TextField()
-    date_created = models.DateTimeField(default=timezone.now)
-
-    class Meta:
-        db_table = 'api_contact_message'

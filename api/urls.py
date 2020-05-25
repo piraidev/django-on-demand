@@ -5,9 +5,7 @@ from api.views import (views,
                        mentor_profile_views,
                        mentee_profile_views,
                        search_views,
-                       conversation_views,
-                       mentorship_views,
-                       contact_message_view)
+                       mentorship_views)
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register('mentorship', mentorship_views.MentorshipViewSet)
@@ -19,7 +17,5 @@ urlpatterns = [
     url(r'^users/(?P<user_id>[0-9]+)/mentee_profile', mentee_profile_views.mentee_profile),
     url('newest_mentors', search_views.newest_mentors),
     url(r'^find-mentors/$', search_views.find_mentors),
-    url(r'^conversations/(?P<mentorship_id>[0-9]+)', conversation_views.get_messages),
-    url('contact_message', contact_message_view.register_contact_message),
     url('', include(router.urls))
 ]

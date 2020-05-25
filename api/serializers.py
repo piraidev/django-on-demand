@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from api.models import UserDetails, MentorProfile, MenteeProfile, Message, Mentorship
+from api.models import UserDetails, MentorProfile, MenteeProfile, Mentorship
 from rest_framework import serializers
 
 class UserDetailsSerializer(serializers.ModelSerializer):
@@ -32,12 +32,6 @@ class MenteeProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenteeProfile
         fields = ('user_id', 'user')
-
-class MessageSerializer(serializers.ModelSerializer):
-    sender = UserSerializerWithoutAuthData(read_only = True)
-    class Meta:
-        model = Message
-        fields = ('mentorship', 'sender', 'text', 'date_sent')
 
 class MentorshipSerializer(serializers.ModelSerializer):
     class Meta:
