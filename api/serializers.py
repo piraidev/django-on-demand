@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from api.models import UserDetails, MentorProfile, MenteeProfile, Message, Mentorship, Notification
+from api.models import UserDetails, MentorProfile, MenteeProfile, Message, Mentorship
 from rest_framework import serializers
 
 class UserDetailsSerializer(serializers.ModelSerializer):
@@ -56,10 +56,4 @@ class MentorshipSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Mentorship.objects.create(**validated_data)
-
-class NotificationSerializer(serializers.ModelSerializer):
-    user = UserSerializerWithoutAuthData(read_only = True)
-    from_user = UserSerializerWithoutAuthData(read_only = True)
-    class Meta:
-        model = Notification
-        fields = ('id', 'user', 'from_user', 'mentorship', 'notification_type', 'date_created', 'viewed')
+        

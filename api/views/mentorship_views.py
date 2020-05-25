@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth.models import User
-from api.models import Mentorship, MenteeProfile, MentorProfile, Notification
+from api.models import Mentorship, MenteeProfile, MentorProfile
 from api.serializers import MentorshipSerializer, MenteeProfileSerializer, MentorProfileSerializer
 from django.conf import settings
 from api.signals import mentorship_requested, mentorship_finished, mentorship_cancelled, mentorship_accepted, mentorship_rejected

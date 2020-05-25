@@ -7,7 +7,6 @@ from api.views import (views,
                        search_views,
                        conversation_views,
                        mentorship_views,
-                       notifications_views,
                        contact_message_view)
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -21,8 +20,6 @@ urlpatterns = [
     url('newest_mentors', search_views.newest_mentors),
     url(r'^find-mentors/$', search_views.find_mentors),
     url(r'^conversations/(?P<mentorship_id>[0-9]+)', conversation_views.get_messages),
-    url(r'^get_notifications/(?P<user_id>[0-9]+)', notifications_views.get_notifications),
-    url(r'^notifications_viewed/(?P<user_id>[0-9]+)', notifications_views.notifications_viewed),
     url('contact_message', contact_message_view.register_contact_message),
     url('', include(router.urls))
 ]
