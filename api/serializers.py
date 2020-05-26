@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from api.models import UserDetails, MentorProfile, MenteeProfile, Mentorship
+from api.models import UserDetails, SupplierProfile, ConsumerProfile, Connection
 from rest_framework import serializers
 
 class UserDetailsSerializer(serializers.ModelSerializer):
@@ -19,35 +19,35 @@ class UserSerializerWithoutAuthData(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'userDetails')
 
-class MentorProfileSerializer(serializers.ModelSerializer):
+class SupplierProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only = True)
 
     class Meta:
-        model = MentorProfile
-        fields = ('skills', 'user_id', 'user', 'finished_mentorships_count', 'mentorships_ranking_accumulator')
+        model = SupplierProfile
+        fields = ('skills', 'user_id', 'user', 'finished_connections_count', 'connections_ranking_accumulator')
 
-class MenteeProfileSerializer(serializers.ModelSerializer):
+class ConsumerProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only = True)
 
     class Meta:
-        model = MenteeProfile
+        model = ConsumerProfile
         fields = ('user_id', 'user')
 
-class MentorshipSerializer(serializers.ModelSerializer):
+class ConnectionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Mentorship
+        model = Connection
         fields = ('id',
-                  'mentor',
-                  'mentee',
+                  'supplier',
+                  'consumer',
                   'status',
                   'date_created',
                   'date_finished',
                   'objective',
                   'rejection_reason',
-                  'mentee_request_comments',
+                  'consumer_request_comments',
                   'finish_reason',
                   'ranking')
 
     def create(self, validated_data):
-        return Mentorship.objects.create(**validated_data)
+        return Connection.objects.create(**validated_data)
         

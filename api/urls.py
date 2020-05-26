@@ -2,20 +2,20 @@ from django.conf.urls import url, include
 from rest_framework import routers
 from api.views import (views,
                        role_view,
-                       mentor_profile_views,
-                       mentee_profile_views,
+                       supplier_profile_views,
+                       consumer_profile_views,
                        search_views,
-                       mentorship_views)
+                       connection_views)
 
 router = routers.DefaultRouter(trailing_slash=False)
-router.register('mentorship', mentorship_views.MentorshipViewSet)
+router.register('connection', connection_views.ConnectionViewSet)
 
 urlpatterns = [
     url('status/', views.status),
     url('users/change_role/', role_view.change_role),
-    url(r'^users/(?P<user_id>[0-9]+)/mentor_profile', mentor_profile_views.mentor_profile),
-    url(r'^users/(?P<user_id>[0-9]+)/mentee_profile', mentee_profile_views.mentee_profile),
-    url('newest_mentors', search_views.newest_mentors),
-    url(r'^find-mentors/$', search_views.find_mentors),
+    url(r'^users/(?P<user_id>[0-9]+)/supplier_profile', supplier_profile_views.supplier_profile),
+    url(r'^users/(?P<user_id>[0-9]+)/consumer_profile', consumer_profile_views.consumer_profile),
+    url('newest_suppliers', search_views.newest_suppliers),
+    url(r'^find-suppliers/$', search_views.find_suppliers),
     url('', include(router.urls))
 ]

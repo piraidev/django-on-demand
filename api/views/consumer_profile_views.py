@@ -1,25 +1,25 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from api.models import MentorProfile
-from api.serializers import MentorProfileSerializer
+from api.models import ConsumerProfile
+from api.serializers import ConsumerProfileSerializer
 
 @api_view(['GET', 'PUT'])
-def mentor_profile(request, user_id):
+def consumer_profile(request, user_id):
     """
     Retrieve, update or delete a code snippet.
     """
     try:
-        mentor_profile = MentorProfile.objects.get(user_id=user_id)
-    except MentorProfile.DoesNotExist:
+        consumer_profile = ConsumerProfile.objects.get(user_id=user_id)
+    except ConsumerProfile.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        mentor_profile = MentorProfileSerializer(mentor_profile)
-        return Response(mentor_profile.data)
+        consumer_profile = ConsumerProfileSerializer(consumer_profile)
+        return Response(consumer_profile.data)
 
     elif request.method == 'PUT':
-        serializer = MentorProfileSerializer(mentor_profile, data=request.data)
+        serializer = ConsumerProfileSerializer(consumer_profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

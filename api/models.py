@@ -26,47 +26,47 @@ class UserDetails(models.Model):
     education = models.TextField(blank=True, null=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
-class MentorProfile(models.Model):
+class SupplierProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
-        related_name='mentor_profile',
+        related_name='supplier_profile',
         null=True
     )
     skills = models.TextField(blank=True, null=True)
-    finished_mentorships_count = models.IntegerField(default=0)
-    mentorships_ranking_accumulator = models.IntegerField(default=0)
+    finished_connections_count = models.IntegerField(default=0)
+    connections_ranking_accumulator = models.IntegerField(default=0)
     date_joined = models.DateTimeField(default=timezone.now)
     
     class Meta:
-        db_table = 'api_mentor_profile'
+        db_table = 'api_supplier_profile'
 
-class MenteeProfile(models.Model):
+class ConsumerProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
-        related_name='mentee_profile',
+        related_name='consumer_profile',
         null=True
     )
     date_joined = models.DateTimeField(default=timezone.now)
     
     class Meta:
-        db_table = 'api_mentee_profile'
+        db_table = 'api_consumer_profile'
 
-class Mentorship(models.Model):
+class Connection(models.Model):
     status = models.TextField()
-    mentor = models.ForeignKey(
+    supplier = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='mentorship_mentor')
-    mentee = models.ForeignKey(
+        related_name='connection_supplier')
+    consumer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='mentorship_mentee')
+        related_name='connection_consumer')
     date_created = models.DateTimeField(default=timezone.now)
     date_finished = models.DateTimeField(blank=True, null=True)
     objective = models.TextField()
     rejection_reason = models.TextField(blank=True, null=True)
     finish_reason = models.TextField(blank=True, null=True)
-    mentee_request_comments = models.TextField(blank=True, null=True)
+    consumer_request_comments = models.TextField(blank=True, null=True)
     ranking = models.IntegerField(blank=True, null=True)
