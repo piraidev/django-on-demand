@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
-from api.models import MenteeProfile, MentorProfile
-from api.serializers import UserSerializer, MentorProfileSerializer, MenteeProfileSerializer
+from api.models import ConsumerProfile, SupplierProfile
+from api.serializers import UserSerializer, SupplierProfileSerializer, ConsumerProfileSerializer
 from django.conf import settings
 
 def create_profile(user, user_type):
-    if user_type == 'mentor':
-        profile, created = MentorProfile.objects.get_or_create(user=user)
+    if user_type == 'supplier':
+        profile, created = SupplierProfile.objects.get_or_create(user=user)
     else:
-        profile, created = MenteeProfile.objects.get_or_create(user=user)
+        profile, created = ConsumerProfile.objects.get_or_create(user=user)
     return profile

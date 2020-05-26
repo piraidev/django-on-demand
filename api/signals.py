@@ -1,11 +1,11 @@
 import django.dispatch
 
-mentorship_requested = django.dispatch.Signal(providing_args=["from_user", "to_user"])
+connection_requested = django.dispatch.Signal(providing_args=["from_user", "to_user"])
 
-mentorship_cancelled = django.dispatch.Signal(providing_args=["from_user", "to_user", "role_to_notify", "mentorship_cancelled"])
+connection_cancelled = django.dispatch.Signal(providing_args=["from_user", "to_user", "role_to_notify", "connection_cancelled"])
 
-mentorship_finished = django.dispatch.Signal(providing_args=["from_user", "to_user", "mentorship", "mentor_ranking"])
+connection_finished = django.dispatch.Signal(providing_args=["from_user", "to_user", "connection", "supplier_ranking"])
 
-mentorship_accepted = django.dispatch.Signal(providing_args=["from_user", "to_user", "mentorship"])
+connection_accepted = django.dispatch.Signal(providing_args=["from_user", "to_user", "connection"])
 
-mentorship_rejected = django.dispatch.Signal(providing_args=["from_user", "to_user", "mentorship", "rejection_reason"])
+connection_rejected = django.dispatch.Signal(providing_args=["from_user", "to_user", "connection", "rejection_reason"])

@@ -1,25 +1,25 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from api.models import MenteeProfile
-from api.serializers import MenteeProfileSerializer
+from api.models import SupplierProfile
+from api.serializers import SupplierProfileSerializer
 
 @api_view(['GET', 'PUT'])
-def mentee_profile(request, user_id):
+def supplier_profile(request, user_id):
     """
     Retrieve, update or delete a code snippet.
     """
     try:
-        mentee_profile = MenteeProfile.objects.get(user_id=user_id)
-    except MenteeProfile.DoesNotExist:
+        supplier_profile = SupplierProfile.objects.get(user_id=user_id)
+    except SupplierProfile.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        mentee_profile = MenteeProfileSerializer(mentee_profile)
-        return Response(mentee_profile.data)
+        supplier_profile = SupplierProfileSerializer(supplier_profile)
+        return Response(supplier_profile.data)
 
     elif request.method == 'PUT':
-        serializer = MenteeProfileSerializer(mentee_profile, data=request.data)
+        serializer = SupplierProfileSerializer(supplier_profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

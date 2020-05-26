@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 import api.services.profile_service as profile_service
-from api.serializers import UserSerializer, MentorProfileSerializer, MenteeProfileSerializer
+from api.serializers import UserSerializer, SupplierProfileSerializer, ConsumerProfileSerializer
 
 @api_view(['POST'])
 @transaction.atomic
@@ -18,8 +18,8 @@ def change_role(request):
 
     user = User.objects.get(id=user_id)
     profile = profile_service.create_profile(user, user_type)
-    if (user_type == 'mentor'):
-        serializer = MentorProfileSerializer(profile)
+    if (user_type == 'supplier'):
+        serializer = SupplierProfileSerializer(profile)
     else:
-        serializer = MenteeProfileSerializer(profile)
+        serializer = ConsumerProfileSerializer(profile)
     return Response(serializer.data, status=status.HTTP_200_OK)
