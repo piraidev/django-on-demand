@@ -5,8 +5,9 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-import api.services.profile_service as profile_service
-from api.serializers import UserSerializer, SupplierProfileSerializer, ConsumerProfileSerializer
+import on_demand.services.profile_service as profile_service
+from on_demand.serializers import UserSerializer, SupplierProfileSerializer, ConsumerProfileSerializer
+
 
 @api_view(['POST'])
 @transaction.atomic

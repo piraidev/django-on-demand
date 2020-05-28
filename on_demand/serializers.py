@@ -1,37 +1,47 @@
 from django.contrib.auth.models import User
-from api.models import UserDetails, SupplierProfile, ConsumerProfile, Connection
+from on_demand.models import UserDetails, SupplierProfile, ConsumerProfile, Connection
 from rest_framework import serializers
+
 
 class UserDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserDetails
-        fields = ('email', 'picture', 'linkedin', 'behance', 'twitter', 'instagram', 'facebook', 'youtube', 'description', 'education')
+        fields = ('email', 'picture', 'linkedin', 'behance', 'twitter',
+                  'instagram', 'facebook', 'youtube', 'description', 'education')
+
 
 class UserSerializer(serializers.ModelSerializer):
     userDetails = UserDetailsSerializer(read_only=True)
+
     class Meta:
         model = User
         fields = ('id', 'username', 'userDetails')
+
 
 class UserSerializerWithoutAuthData(serializers.ModelSerializer):
     userDetails = UserDetailsSerializer(read_only=True)
+
     class Meta:
         model = User
         fields = ('id', 'username', 'userDetails')
 
+
 class SupplierProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only = True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = SupplierProfile
-        fields = ('skills', 'user_id', 'user', 'finished_connections_count', 'connections_ranking_accumulator')
+        fields = ('skills', 'user_id', 'user',
+                  'finished_connections_count', 'connections_ranking_accumulator')
+
 
 class ConsumerProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only = True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = ConsumerProfile
         fields = ('user_id', 'user')
+
 
 class ConnectionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,4 +60,3 @@ class ConnectionSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Connection.objects.create(**validated_data)
-        
