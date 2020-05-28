@@ -4,10 +4,11 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth.models import User
-from api.models import Connection, ConsumerProfile, SupplierProfile
-from api.serializers import ConnectionSerializer, ConsumerProfileSerializer, SupplierProfileSerializer
+from on_demand.models import Connection, ConsumerProfile, SupplierProfile
+from on_demand.serializers import ConnectionSerializer, ConsumerProfileSerializer, SupplierProfileSerializer
+from on_demand.signals import connection_requested, connection_finished, connection_cancelled, connection_accepted, connection_rejected
 from django.conf import settings
-from api.signals import connection_requested, connection_finished, connection_cancelled, connection_accepted, connection_rejected
+
 
 class ConnectionViewSet(viewsets.ModelViewSet):
     queryset = Connection.objects.all()
@@ -36,7 +37,8 @@ class ConnectionViewSet(viewsets.ModelViewSet):
         serializer.is_valid()
         connection_created = serializer.save()
         if(connection_created is True):
-            connection_requested.send(sender=self.__class__, from_user=consumer.profile.email, to_user=supplier.profile.email)
+            connection_requested.send(
+                sender=self.__class__, from_user=consumer.profile.email, to_user=supplier.profile.email)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
@@ -45,20 +47,25 @@ class ConnectionViewSet(viewsets.ModelViewSet):
         role = request.data['role']
         connection = Connection.objects.get(id=connection_id)
         connection.status = connection_status
-        role_to_notify, user = ('supplier', connection.supplier) if role == 'consumer' else ('consumer', connection.consumer)
+        role_to_notify, user = ('supplier', connection.supplier) if role == 'consumer' else (
+            'consumer', connection.consumer)
         from_user = connection.consumer if role == 'consumer' else connection.supplier
         if(connection_status == 'cancelled'):
-            connection_cancelled.send(sender=self.__class__, from_user=from_user.profile.email, to_user=user.profile.email, role_to_notify=role_to_notify, connection_cancelled=connection)
+            connection_cancelled.send(sender=self.__class__, from_user=from_user.profile.email,
+                                      to_user=user.profile.email, role_to_notify=role_to_notify, connection_cancelled=connection)
         elif(connection_status == 'finished'):
             ranking = request.data['ranking']
             connection.ranking = ranking
-            connection_finished.send(sender=self.__class__, from_user=from_user.profile.email, to_user=user.profile.email, connection=connection, supplier_ranking=ranking)
+            connection_finished.send(sender=self.__class__, from_user=from_user.profile.email,
+                                     to_user=user.profile.email, connection=connection, supplier_ranking=ranking)
         elif(connection_status == 'ongoing'):
-            connection_accepted.send(sender=self.__class__, from_user=from_user.profile.email, to_user=user.profile.email, connection=connection)
+            connection_accepted.send(sender=self.__class__, from_user=from_user.profile.email,
+                                     to_user=user.profile.email, connection=connection)
         elif(connection_status == 'rejected'):
             rejection_reason = request.data['rejection_reason']
             connection.rejection_reason = rejection_reason
-            connection_rejected.send(sender=self.__class__, from_user=from_user.profile.email, to_user=user.profile.email, connection=connection, rejection_reason=rejection_reason)
-        
+            connection_rejected.send(sender=self.__class__, from_user=from_user.profile.email,
+                                     to_user=user.profile.email, connection=connection, rejection_reason=rejection_reason)
+
         connection.save()
         return Response(status=status.HTTP_200_OK)

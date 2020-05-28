@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
-from api.models import ConsumerProfile, SupplierProfile
-from api.serializers import UserSerializer, SupplierProfileSerializer, ConsumerProfileSerializer
-from django.conf import settings
+from on_demand.models import ConsumerProfile, SupplierProfile
+from on_demand.serializers import UserSerializer, SupplierProfileSerializer, ConsumerProfileSerializer
+
 
 def create_profile(user, user_type):
     if user_type == 'supplier':

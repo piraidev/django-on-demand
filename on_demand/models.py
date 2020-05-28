@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 class UserDetails(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -26,6 +27,7 @@ class UserDetails(models.Model):
     education = models.TextField(blank=True, null=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
+
 class SupplierProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -37,9 +39,10 @@ class SupplierProfile(models.Model):
     finished_connections_count = models.IntegerField(default=0)
     connections_ranking_accumulator = models.IntegerField(default=0)
     date_joined = models.DateTimeField(default=timezone.now)
-    
+
     class Meta:
-        db_table = 'api_supplier_profile'
+        db_table = 'on_demand_supplier_profile'
+
 
 class ConsumerProfile(models.Model):
     user = models.OneToOneField(
@@ -49,9 +52,10 @@ class ConsumerProfile(models.Model):
         null=True
     )
     date_joined = models.DateTimeField(default=timezone.now)
-    
+
     class Meta:
-        db_table = 'api_consumer_profile'
+        db_table = 'on_demand_consumer_profile'
+
 
 class Connection(models.Model):
     status = models.TextField()
