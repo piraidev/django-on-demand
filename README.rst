@@ -19,7 +19,7 @@ The app will automatically install `django-rest-framework` if it's not installed
         'rest_framework'
     ]
 
-2. Include the Social Rest API URLconf in your project urls.py like this::
+2. Include the Django On Demand URLconf in your project urls.py like this::
 
     path('ondemand/', include('on_demand.urls')),
 
