@@ -19,16 +19,14 @@ This app is still work in progress. To install the work in progress version
 This app is using `django-rest-framework` to provide API endpoints, which means this app will need to be added to the list of installed apps.
 The app will automatically install `django-rest-framework` if it's not installed.
 `on_demand` also needs to be added to the list of installed apps.
-
 ```
-INSTALLED_APPS = [
-    .,
-    .,
-    .,
-    'on_demand',
-    'rest_framework'
-]
+ INSTALLED_APPS = [
+        ...
+        'on_demand',
+        'rest_framework'
+    ]
 ```
 
-After installing the app, run `python3 manage.py migrate` to get the models from the app.
-Also, add to your project's `urls.py` the following entry to get the app's endpoints: `path('ondemand/', include('on_demand.urls'))`
+Run `python3 manage.py migrate` to get the models from the app.
+
+Include the Social Rest API URLconf in your project `urls.py` like this: `path('ondemand/', include('on_demand.urls'))`
