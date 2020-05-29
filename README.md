@@ -29,3 +29,6 @@ INSTALLED_APPS = [
     'rest_framework'
 ]
 ```
+
+After installing the app, run `python3 manage.py migrate` to get the models from the app.
+Also, add to your project's `urls.py` the following entry to get the app's endpoints: `path('ondemand/', include('on_demand.urls'))`
