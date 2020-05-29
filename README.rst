@@ -1,10 +1,9 @@
-===============
-Social Rest API
-===============
+==================
+ Djando On-Demand
+==================
 
-Social Rest API is a Django app to conduct construction of APIs ment to be used for on-demannd and social apps.
-
-Detailed documentation is in the "docs" directory.
+Manage suppliers and consumers in an on-demand marketplace. 
+More info about on-demand: https://www.pubnub.com/blog/what-is-the-on-demand-economy/
 
 Quick start
 -----------
@@ -23,9 +22,6 @@ The app will automatically install `django-rest-framework` if it's not installed
 
     path('ondemand/', include('on_demand.urls')),
 
-3. Run ``python manage.py migrate`` to create the Social Rest API models.
+3. Run ``python manage.py migrate`` to create the models.
 
-4. Start the development server and visit http://127.0.0.1:8000/admin/
-   to create an Social API (you'll need the Admin app enabled).
-
-5. Visit http://127.0.0.1:8000/ondemand/ to test the new API.
+4. Visit http://127.0.0.1:8000/ondemand/ to test the new API.
