@@ -1,5 +1,10 @@
 # DJANGO ON-DEMAND
 
+[![pypi-version]][pypi]
+
+[pypi-version]: https://img.shields.io/pypi/v/django-on-demand.svg
+[pypi]: https://pypi.org/project/django-on-demand/
+
 Manage suppliers and consumers in an on-demand marketplace. 
 Think of it like an API to build services like Airbnb, Upwork, or any marketplace where you have suppliers offering a service o product, and consumers searching for specific characteristics of the product or service.
 
@@ -27,7 +32,7 @@ Full documentation on https://django-on-demand.readthedocs.io/en/latest/
 
 ### Install app
 This app is still work in progress. To install the work in progress version 
-`pip3 install -i https://test.pypi.org/simple/ django-on-demand`
+`pip3 install django-on-demand`
 
 ### INSTALLED_APPS requirement
 This app is using `django-rest-framework` to provide API endpoints, which means this app will need to be added to the list of installed apps.
@@ -43,4 +48,30 @@ The app will automatically install `django-rest-framework` if it's not installed
 
 Run `python3 manage.py migrate` to get the models from the app.
 
-Include the Social Rest API URLconf in your project `urls.py` like this: `path('ondemand/', include('on_demand.urls'))`
+Include the Django On Demand Rest API URLconf in your project `urls.py` like this: `path('ondemand/', include('on_demand.urls'))`
+
+## Tests
+
+This project includes (and encourages writing) tests, with coverage, using an in memory db 'SQLite'.
+
+### Running tests:
+```
+python runtests.py 
+````
+
+### Test + coverage
+```
+coverage run --source='./on_demand' runtests.py
+```
+
+Then to get the report on the CLI run
+```
+coverage report -m
+```
+
+Or to get a fancy HTML report just run:
+```
+coverage html
+open htmlcov/index.html
+```
+and navigate the file to inspect statements covered.

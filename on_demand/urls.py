@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from rest_framework import routers
-from on_demand.views import (views,
+from on_demand.views import (status_views,
                              role_view,
                              supplier_profile_views,
                              consumer_profile_views,
@@ -11,7 +11,7 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register('connection', connection_views.ConnectionViewSet)
 
 urlpatterns = [
-    url('status/', views.status),
+    url('status/', status_views.status),
     url('users/change_role/', role_view.change_role),
     url(r'^users/(?P<user_id>[0-9]+)/supplier_profile',
         supplier_profile_views.supplier_profile),
