@@ -1,9 +1,12 @@
 # DJANGO ON-DEMAND
 
 [![pypi-version]][pypi]
+[![build-status-image]][travis]
 
 [pypi-version]: https://img.shields.io/pypi/v/django-on-demand.svg
 [pypi]: https://pypi.org/project/django-on-demand/
+[build-status-image]: https://travis-ci.org/piraidev/django-on-demand.svg?branch=master
+[travis]: https://travis-ci.org/piraidev/django-on-demand
 
 Manage suppliers and consumers in an on-demand marketplace. 
 More info about on-demand: https://www.pubnub.com/blog/what-is-the-on-demand-economy/
