@@ -35,3 +35,29 @@ The app will automatically install `django-rest-framework` if it's not installed
 Run `python3 manage.py migrate` to get the models from the app.
 
 Include the Django On Demand Rest API URLconf in your project `urls.py` like this: `path('ondemand/', include('on_demand.urls'))`
+
+## Tests
+
+This project includes (and encourages writing) tests, with coverage, using an in memory db 'SQLite'.
+
+### Running tests:
+```
+python runtests.py 
+````
+
+### Test + coverage
+```
+coverage run --source='./on_demand' runtests.py
+```
+
+Then to get the report on the CLI run
+```
+coverage report -m
+```
+
+Or to get a fancy HTML report just run:
+```
+coverage html
+open htmlcov/index.html
+```
+and navigate the file to inspect statements covered.
