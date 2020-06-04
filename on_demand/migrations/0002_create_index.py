@@ -9,8 +9,7 @@ def forwards(apps, schema_editor):
       print('Skipping migration without attempting to ADD FULL TEXT SEARCH')
       return
 
-  migrations.RunSQL('ALTER TABLE on_demand_supplier_profile ADD FULLTEXT (skills)')
-  migrations.RunSQL('ALTER TABLE on_demand_userdetails ADD FULLTEXT (description, education)')
+  migrations.RunSQL('ALTER TABLE on_demand_userdetails ADD FULLTEXT (description)')
 
 class Migration(migrations.Migration):
 
