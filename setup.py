@@ -1,5 +1,7 @@
 from setuptools import setup
 
 setup(install_requires=[
-    'django-rest-framework'
+    'django-rest-framework',
+    'django-filter'
+
 ])
