@@ -27,3 +27,7 @@ local_settings.py
 
 # Ignore virtual studio (IDE) files
 .vscode
+
+# Ignore build folder
+build/
+docs/source/_build/

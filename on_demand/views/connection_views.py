@@ -18,16 +18,20 @@ class ConnectionViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         objective = request.data['objective']
-        objective = request.data['objective']
-        connection_status = request.data['status']
         if ('consumer_request_comments' in request.data.keys()):
             consumer_request_comments = request.data['consumer_request_comments']
         else:
             consumer_request_comments = None
+
+        if ('connection_status' in request.data.keys()):
+            connection_status = request.data['connection_status']
+        else:
+            connection_status = "STARTED"
+
         supplier_id = request.data['supplier_id']
         consumer_id = request.data['consumer_id']
         consumer = User.objects.get(id=consumer_id)
-        supplier = User.objects.get(id=suplier_id)
+        supplier = User.objects.get(id=supplier_id)
         serializer = ConnectionSerializer(data={
             'consumer': consumer.id,
             'supplier': supplier.id,
