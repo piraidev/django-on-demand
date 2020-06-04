@@ -32,6 +32,8 @@ The app will automatically install `django-rest-framework` if it's not installed
         'rest_framework'
     ]
 
+Given that the app has models, a db client should be installed. For example `pip install mysqlclient`
+
 2. Include the Django On Demand URLconf in your project urls.py like this::
 
     path('ondemand/', include('on_demand.urls')),

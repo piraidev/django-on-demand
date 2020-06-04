@@ -23,7 +23,7 @@ Installation
     #urls.py
     path('ondemand/', include('on_demand.urls')),
 
-4. Run ``python manage.py migrate`` to create the models.
+4. Given that the app has models, a db client should be installed. For example `pip install mysqlclient`. Run ``python manage.py migrate`` to create the models.
 
 
 5. Visit http://127.0.0.1:8000/ondemand/ to test the new API.

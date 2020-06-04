@@ -49,6 +49,8 @@ The app will automatically install `django-rest-framework` if it's not installed
     ]
 ```
 
+Given that the app has models, a db client should be installed. For example `pip install mysqlclient`
+
 Run `python3 manage.py migrate` to get the models from the app.
 
 Include the Django On Demand Rest API URLconf in your project `urls.py` like this: `path('ondemand/', include('on_demand.urls'))`
