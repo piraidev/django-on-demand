@@ -7,6 +7,8 @@ Think of it like an API to build services like Airbnb, Upwork, or any marketplac
 
 This app provides models and API endpoints to facilitate the implementation of the marketplace.
 
+Full documentation on https://django-on-demand.readthedocs.io/en/latest/
+
 Endpoints
 ---------
 
