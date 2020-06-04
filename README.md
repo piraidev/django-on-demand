@@ -9,7 +9,7 @@
 [travis]: https://travis-ci.org/piraidev/django-on-demand
 
 Manage suppliers and consumers in an on-demand marketplace. 
-Think of it like an API to build services like Airbnb, Upwork, or any marketplace where you have suppliers offering a service o product, and consumers searching for specific characteristics of the product or service.
+Think of it like an API to build services like Airbnb, Upwork, or any marketplace where you have suppliers offering a service or product, and consumers searching for specific characteristics of the product or service.
 
 More info about on-demand: https://www.pubnub.com/blog/what-is-the-on-demand-economy/
 
@@ -48,6 +48,8 @@ The app will automatically install `django-rest-framework` if it's not installed
         'rest_framework'
     ]
 ```
+
+Given that the app has models, a db client should be installed. For example `pip install mysqlclient`
 
 Run `python3 manage.py migrate` to get the models from the app.
 
