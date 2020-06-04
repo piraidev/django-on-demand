@@ -24,7 +24,6 @@ class UserDetails(models.Model):
     facebook = models.TextField(blank=True, null=True)
     youtube = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    education = models.TextField(blank=True, null=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
 
@@ -35,7 +34,6 @@ class SupplierProfile(models.Model):
         related_name='supplier_profile',
         null=True
     )
-    skills = models.TextField(blank=True, null=True)
     finished_connections_count = models.IntegerField(default=0)
     connections_ranking_accumulator = models.IntegerField(default=0)
     date_joined = models.DateTimeField(default=timezone.now)

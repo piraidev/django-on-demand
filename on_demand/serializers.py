@@ -7,7 +7,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserDetails
         fields = ('email', 'picture', 'linkedin', 'behance', 'twitter',
-                  'instagram', 'facebook', 'youtube', 'description', 'education')
+                  'instagram', 'facebook', 'youtube', 'description')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -31,7 +31,7 @@ class SupplierProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SupplierProfile
-        fields = ('skills', 'user_id', 'user',
+        fields = ('user_id', 'user',
                   'finished_connections_count', 'connections_ranking_accumulator')
 
 

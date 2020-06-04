@@ -46,7 +46,6 @@ class Migration(migrations.Migration):
             name='SupplierProfile',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('skills', models.TextField(blank=True, null=True)),
                 ('finished_connections_count', models.IntegerField(default=0)),
                 ('connections_ranking_accumulator', models.IntegerField(default=0)),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now)),
@@ -69,7 +68,6 @@ class Migration(migrations.Migration):
                 ('facebook', models.TextField(blank=True, null=True)),
                 ('youtube', models.TextField(blank=True, null=True)),
                 ('description', models.TextField(blank=True, null=True)),
-                ('education', models.TextField(blank=True, null=True)),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now)),
                 ('user', models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='details', to=settings.AUTH_USER_MODEL)),
             ],
