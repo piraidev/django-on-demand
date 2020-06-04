@@ -17,7 +17,7 @@ urlpatterns = [
         supplier_profile_views.supplier_profile),
     url(r'^users/(?P<user_id>[0-9]+)/consumer_profile',
         consumer_profile_views.consumer_profile),
-    url('newest_suppliers', search_views.newest_suppliers),
+    url('newest-suppliers', search_views.newest_suppliers),
     url(r'^find-suppliers/$', search_views.find_suppliers),
     url('', include(router.urls))
 ]
