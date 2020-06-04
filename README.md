@@ -1,9 +1,12 @@
 # DJANGO ON-DEMAND
 
 [![pypi-version]][pypi]
+[![build-status-image]][travis]
 
 [pypi-version]: https://img.shields.io/pypi/v/django-on-demand.svg
 [pypi]: https://pypi.org/project/django-on-demand/
+[build-status-image]: https://travis-ci.org/piraidev/django-on-demand.svg?branch=master
+[travis]: https://travis-ci.org/piraidev/django-on-demand
 
 Manage suppliers and consumers in an on-demand marketplace. 
 Think of it like an API to build services like Airbnb, Upwork, or any marketplace where you have suppliers offering a service o product, and consumers searching for specific characteristics of the product or service.
