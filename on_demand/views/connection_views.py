@@ -23,11 +23,11 @@ class ConnectionViewSet(viewsets.ModelViewSet):
         else:
             consumer_request_comments = None
 
-         if ('connection_status' in request.data.keys()):
+        if ('connection_status' in request.data.keys()):
             connection_status = request.data['connection_status']
         else:
             connection_status = "STARTED"
-   
+
         supplier_id = request.data['supplier_id']
         consumer_id = request.data['consumer_id']
         consumer = User.objects.get(id=consumer_id)
