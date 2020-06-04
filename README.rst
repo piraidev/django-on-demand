@@ -3,7 +3,7 @@
 ==================
 
 Manage suppliers and consumers in an on-demand marketplace. 
-Think of it like an API to build services like Airbnb, Upwork, or any marketplace where you have suppliers offering a service o product, and consumers searching for specific characteristics of the product or service.
+Think of it like an API to build services like Airbnb, Upwork, or any marketplace where you have suppliers offering a service or product, and consumers searching for specific characteristics of the product or service.
 
 This app provides models and API endpoints to facilitate the implementation of the marketplace.
 
