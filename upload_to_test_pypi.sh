@@ -8,7 +8,7 @@ then
 fi
 
 # Install/update needed tools
-python3 -m pip install --user --upgrade twine setuptools wheel
+python3 -m pip install --upgrade twine setuptools wheel
 
 # Create new build
 python3 setup.py sdist
