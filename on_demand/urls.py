@@ -13,10 +13,10 @@ router.register('connection', connection_views.ConnectionViewSet)
 urlpatterns = [
     url('status/', status_views.status),
     url('users/change_role/', role_view.change_role),
-    url(r'^users/(?P<user_id>[0-9]+)/supplier_profile',
-        supplier_profile_views.supplier_profile),
-    url(r'^users/(?P<user_id>[0-9]+)/consumer_profile',
-        consumer_profile_views.consumer_profile),
+    url(r'^users/(?P<user_id>[0-9]+)/supplier-profile',
+        supplier_profile_views.supplier_profile, name='supplier-profile'),
+    url(r'^users/(?P<user_id>[0-9]+)/consumer-profile',
+        consumer_profile_views.consumer_profile, name='consumer-profile'),
     url('newest-suppliers', search_views.newest_suppliers, name='newest-suppliers'),
     url(r'^find-suppliers/$', search_views.find_suppliers),
     url('', include(router.urls))

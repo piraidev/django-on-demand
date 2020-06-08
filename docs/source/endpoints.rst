@@ -19,13 +19,13 @@ This is a GET endpoint that expects a ``search_term`` parameter in free text. Th
 The response will be JSON type with a list of MentorProfiles that matched the lookup.
 
 
-/users/<id>/supplier_profile
+/users/<id>/supplier-profile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 | GET: Retrieves the supplier profile (if exists) for a given user id.
 | PUT: Saves/updates the supplier profile (if exists) for a given user id.
 
-/users/<id>/consumer_profile
+/users/<id>/consumer-profile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 | GET: Retrieves the consumer profile (if exists) for a given user id.

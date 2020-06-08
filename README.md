@@ -27,8 +27,8 @@ Full documentation on https://django-on-demand.readthedocs.io/en/latest/
 
 
 * ``/search-suppliers``
-* ``/users/<id>/supplier_profile`` (create, update, retrieve)
-* ``/users/<id>/consumer_profile`` (create, update, retrieve)
+* ``/users/<id>/supplier-profile`` (create, update, retrieve)
+* ``/users/<id>/consumer-profile`` (create, update, retrieve)
 * ``/newest-suppliers``
 * ``/connection`` (create a connection between supplier and consumer, update, terminate)
 
