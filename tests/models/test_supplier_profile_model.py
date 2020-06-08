@@ -4,9 +4,19 @@ from on_demand.models import SupplierProfile, UserDetails
 from django.utils import timezone
 
 class SupplierProfileTest(TestCase):
+  user_one_username = 'testuser@example.com'
+  user_one_email = 'testuser@example.com'
+  user_one_password = 'secret'
+  user_one_first_name = 'FirstName'
+  user_one_last_name = 'LastName'
+
   @classmethod
   def setUpTestData(cls):
-    user = get_user_model().objects.create_user(username='testuser@example.com', email='testuser@example.com', password='secret')
+    user = get_user_model().objects.create_user(username=SupplierProfileTest.user_one_username, 
+                                                email=SupplierProfileTest.user_one_email,
+                                                password=SupplierProfileTest.user_one_password,
+                                                first_name=SupplierProfileTest.user_one_first_name,
+                                                last_name=SupplierProfileTest.user_one_last_name)
     supplier_profile, created = SupplierProfile.objects.get_or_create(user=user)
 
   # Testing finished_connections_count default is 0
@@ -32,3 +42,9 @@ class SupplierProfileTest(TestCase):
     self.assertEqual(date_joined().month, timezone.now().month)
     self.assertEqual(date_joined().day, timezone.now().day)
     self.assertEqual(date_joined().minute, timezone.now().minute)
+  
+  def test_supplier_profile_object_name(self):
+    user_details = UserDetails.objects.get(id=1)
+    supplier_profile = SupplierProfile.objects.get(user=user_details.user)
+    expected_supplier_profile_name = f'Supplier: {supplier_profile.user.last_name}, {supplier_profile.user.first_name}'
+    self.assertEquals(expected_supplier_profile_name, str(supplier_profile))
