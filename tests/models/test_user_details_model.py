@@ -9,7 +9,6 @@ class UserDetailsTest(TestCase):
     user = UserDetails.objects.get(id=1)
     user.picture = 'SomePictureURL'
     user.save(update_fields=['picture'])
-    
 
   # Testing label for field defined
   def test_email_label(self):
