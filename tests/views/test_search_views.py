@@ -54,6 +54,6 @@ class NewestSuppliersTest(TestCase):
     supplier_profiles_all = SupplierProfile.objects.all()
     supplier_profiles_all = SupplierProfileSerializer(supplier_profiles_all, many=True)
 
-    # Asserting that despite having 40 Supplier Profiles only first 30 are returnes
+    # Asserting that despite having 40 Supplier Profiles only first 30 are returned
     self.assertEqual(response.status_code, 200)
     self.assertEqual(len(json.loads(response.content.decode('utf-8'))), 30)
