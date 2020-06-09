@@ -6,6 +6,63 @@ from on_demand.models import SupplierProfile, UserDetails
 from on_demand.serializers import SupplierProfileSerializer
 import json
 
+class FindSupplierTest(TestCase):
+  def test_find_suppliers_url_exists_at_desired_location(self):
+    response = self.client.get('/find-suppliers/?search_term=something_to_search')
+    self.assertEqual(response.status_code, 200)
+
+  def test_empty_dict_returned_when_supplier_not_found(self):
+    # Creating Supplier Profile that will not be found
+    user = get_user_model().objects.create_user(username='testuser@example.com',
+                                                email='testuser@example.com',
+                                                password='secret',
+                                                first_name='SomeFirstName',
+                                                last_name='SomeLastName')
+    supplier_profile, created = SupplierProfile.objects.get_or_create(user=user)
+
+    # Calling find supplier method with stripped first_name ar search argument
+    response = self.client.get('/find-suppliers/?search_term=' + 'no_matching_term')
+
+    self.assertEqual(response.status_code, 200)
+    self.assertJSONEqual(response.content, [])
+
+  def test_supplier_is_found_by_similar_first_name(self):
+    first_name = 'SomeFirstName'
+
+    # Creating Supplier Profile to be found
+    user = get_user_model().objects.create_user(username='testuser@example.com',
+                                                email='testuser@example.com',
+                                                password='secret',
+                                                first_name=first_name,
+                                                last_name='SomeLastName')
+    supplier_profile, created = SupplierProfile.objects.get_or_create(user=user)
+    serialized_supplier_profile = SupplierProfileSerializer(supplier_profile)
+
+    # Calling find supplier method with stripped first_name ar search argument
+    response = self.client.get('/find-suppliers/?search_term=' + first_name[4:9])
+
+    self.assertEqual(response.status_code, 200)
+    self.assertJSONEqual(response.content, [serialized_supplier_profile.data])
+  
+  def test_supplier_is_found_by_similar_last_name(self):
+    last_name = 'SomeLastName'
+
+    # Creating Supplier Profile to be found
+    user = get_user_model().objects.create_user(username='testuser@example.com',
+                                                email='testuser@example.com',
+                                                password='secret',
+                                                first_name='SomeFirstName',
+                                                last_name=last_name)
+    supplier_profile, created = SupplierProfile.objects.get_or_create(user=user)
+    serialized_supplier_profile = SupplierProfileSerializer(supplier_profile)
+
+    # Calling find supplier method with stripped first_name ar search argument
+    response = self.client.get('/find-suppliers/?search_term=' + last_name[4:9])
+
+    self.assertEqual(response.status_code, 200)
+    self.assertJSONEqual(response.content, [serialized_supplier_profile.data])
+    
+
 class NewestSuppliersTest(TestCase):
   def test_newest_suppliers_url_exists_at_desired_location(self):
     response = self.client.get('/api/newest-suppliers/')
