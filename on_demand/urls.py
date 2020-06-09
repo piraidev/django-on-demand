@@ -18,6 +18,6 @@ urlpatterns = [
     url(r'^users/(?P<user_id>[0-9]+)/consumer-profile',
         consumer_profile_views.consumer_profile, name='consumer-profile'),
     url('newest-suppliers', search_views.newest_suppliers, name='newest-suppliers'),
-    url(r'^find-suppliers/$', search_views.find_suppliers),
+    url(r'^find-suppliers/$', search_views.find_suppliers, name='find-suppliers'),    # Example: /find-suppliers/?search_term=something_to_search
     url('', include(router.urls))
 ]

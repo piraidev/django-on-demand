@@ -4,10 +4,12 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from on_demand.models import SupplierProfile
+from on_demand.models import SupplierProfile, UserDetails
 from on_demand.serializers import SupplierProfileSerializer, UserSerializer
+from django.contrib.auth import get_user_model
 import urllib.parse
 
+from django.db import connection
 
 @api_view(['GET'])
 def newest_suppliers(request):
@@ -20,17 +22,29 @@ def newest_suppliers(request):
         supplier_profiles, many=True)
     return Response(supplier_serializer.data)
 
-
 @api_view(['GET'])
 def find_suppliers(request):
+    # Getting and parsing search term url param
     search_term = request.GET.get('search_term')
     decoded_search_term = urllib.parse.unquote(search_term)
-    search_query_tables = "SELECT * FROM api_supplier_profile M LEFT JOIN auth_user U ON M.user_id = U.id LEFT JOIN api_userdetails P ON P.user_id = U.id WHERE "
-    search_query_names_like = "U.first_name LIKE %s OR U.last_name LIKE %s OR "
-    search_query_full_text_profile = "MATCH (P.description) AGAINST (%s IN NATURAL LANGUAGE MODE)"
-    complete_search_query = search_query_tables + search_query_names_like + \
-        search_query_full_text_profile + search_query_full_text_supplier_profile
-    results = SupplierProfile.objects.raw(
-        complete_search_query, ['java', 'java', 'java', 'java', decoded_search_term])
+
+    # Resolving table names to build the sql query
+    supplier_profile_db_table = SupplierProfile._meta.db_table
+    user_details_db_table = UserDetails._meta.db_table
+    django_auth_user_db_table = get_user_model()._meta.db_table
+
+    # Adding FULL TEXT search only if a MYSQL DB is being used
+    if connection.settings_dict['ENGINE'] == 'django.db.backends.mysql':
+      search_query_tables = f'SELECT * FROM {supplier_profile_db_table} S LEFT JOIN {django_auth_user_db_table} U ON S.user_id = U.id LEFT JOIN {user_details_db_table} D ON D.user_id = U.id WHERE '
+      search_query_names_like = f'U.first_name LIKE \'%%{decoded_search_term}%%\' OR U.last_name LIKE \'%%{decoded_search_term}%%\'' 
+      search_query_full_text_supplier_profile = f' OR MATCH (D.description) AGAINST ({decoded_search_term} IN NATURAL LANGUAGE MODE)'
+      complete_search_query = search_query_tables + search_query_names_like + search_query_full_text_supplier_profile
+    else:
+      search_query_tables = f'SELECT * FROM {supplier_profile_db_table} S LEFT JOIN {django_auth_user_db_table} U ON S.user_id = U.id WHERE '
+      search_query_names_like = f'U.first_name LIKE \'%%{decoded_search_term}%%\' OR U.last_name LIKE \'%%{decoded_search_term}%%\''
+      complete_search_query = search_query_tables + search_query_names_like
+
+    results = SupplierProfile.objects.raw(complete_search_query)
+
     profile_serializer = SupplierProfileSerializer(results, many=True)
     return Response(profile_serializer.data)
