@@ -18,14 +18,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'userDetails')
 
 
-class UserSerializerWithoutAuthData(serializers.ModelSerializer):
-    userDetails = UserDetailsSerializer(read_only=True)
-
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'userDetails')
-
-
 class SupplierProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
